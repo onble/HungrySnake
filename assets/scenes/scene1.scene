@@ -23,7 +23,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 220
+      "__id__": 221
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -54,7 +54,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 221
+      "__id__": 222
     },
     "_id": "b95c2de9-04c1-4203-9a5c-429290044036"
   },
@@ -95,13 +95,13 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 217
-      },
-      {
         "__id__": 218
       },
       {
         "__id__": 219
+      },
+      {
+        "__id__": 220
       }
     ],
     "_prefab": null,
@@ -7724,6 +7724,9 @@
       },
       {
         "__id__": 216
+      },
+      {
+        "__id__": 217
       }
     ],
     "removedComponents": []
@@ -7823,6 +7826,18 @@
     }
   },
   {
+    "__type__": "CCPropertyOverrideInfo",
+    "targetInfo": {
+      "__id__": 215
+    },
+    "propertyPath": [
+      "joystick"
+    ],
+    "value": {
+      "__id__": 8
+    }
+  },
+  {
     "__type__": "cc.UITransform",
     "_name": "",
     "_objFlags": 0,
@@ -7906,28 +7921,28 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 222
-    },
-    "shadows": {
       "__id__": 223
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 224
     },
-    "fog": {
+    "_skybox": {
       "__id__": 225
     },
-    "octree": {
+    "fog": {
       "__id__": 226
     },
-    "skin": {
+    "octree": {
       "__id__": 227
     },
-    "lightProbeInfo": {
+    "skin": {
       "__id__": 228
     },
-    "postSettings": {
+    "lightProbeInfo": {
       "__id__": 229
+    },
+    "postSettings": {
+      "__id__": 230
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

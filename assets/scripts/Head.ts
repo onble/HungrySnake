@@ -1,4 +1,18 @@
-import { _decorator, CCFloat, CCInteger, Component, instantiate, math, Node, Prefab, UITransform, v2, v3 } from "cc";
+import {
+    _decorator,
+    CCFloat,
+    CCInteger,
+    Component,
+    instantiate,
+    math,
+    Node,
+    Prefab,
+    UITransform,
+    v2,
+    v3,
+    Vec3,
+} from "cc";
+import { Joystick } from "./Joystick";
 const { ccclass, property } = _decorator;
 
 @ccclass("Head")
@@ -30,7 +44,14 @@ export class Head extends Component {
     /** 蛇移动速度 */
     speed: number = 200;
 
-    //#region 变量
+    /** 蛇头的方向 */
+    @property(Vec3)
+    snakeDir: Vec3; // 蛇头的方向
+
+    //#endregion 变量
+
+    @property(Node)
+    public joystick: Node = null;
 
     //#region 生命周期
     protected onLoad(): void {
@@ -47,7 +68,11 @@ export class Head extends Component {
         this.node.parent.addChild(instantiate(this.foodPrefab));
     }
 
-    update(deltaTime: number) {}
+    update(deltaTime: number) {
+        this.snakeDir = this.joystick.getComponent(Joystick).dir.normalize();
+        const newPos = this.node.position.clone().add(this.snakeDir.clone().multiplyScalar(this.speed * deltaTime));
+        this.node.setPosition(newPos);
+    }
     //#endregion 生命周期
 
     rotateHead(headPos: math.Vec2) {
