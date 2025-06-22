@@ -48,6 +48,9 @@ export class Head extends Component {
     @property(Vec3)
     snakeDir: Vec3; // 蛇头的方向
 
+    /** 保存上一帧的移动方向 */
+    previousMoveDir: Vec3;
+
     //#endregion 变量
 
     @property(Node)
@@ -59,6 +62,8 @@ export class Head extends Component {
         this.node.setPosition(this.randomPos());
 
         this.rotateHead(new math.Vec2(this.node.position.x, this.node.position.y));
+
+        this.previousMoveDir = this.node.position.clone().normalize();
         for (let i = 1; i <= this.bodyNum; i++) {
             this.getNowBody();
         }
@@ -73,7 +78,14 @@ export class Head extends Component {
 
     update(deltaTime: number) {
         this.snakeDir = this.joystick.getComponent(Joystick).dir.normalize();
+        if (this.snakeDir.length() === 0) {
+            this.snakeDir = this.previousMoveDir.clone().normalize();
+        } else {
+            this.node.angle = this.joystick.getComponent(Joystick).calculateAngle() - 90;
+            this.previousMoveDir = this.snakeDir;
+        }
         const newPos = this.node.position.clone().add(this.snakeDir.clone().multiplyScalar(this.speed * deltaTime));
+
         this.node.setPosition(newPos);
     }
     //#endregion 生命周期
