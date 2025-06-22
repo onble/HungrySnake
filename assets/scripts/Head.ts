@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, math, Node, Prefab, UITransform, v3 } from "cc";
+import { _decorator, CCFloat, CCInteger, Component, instantiate, math, Node, Prefab, UITransform, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("Head")
@@ -22,6 +22,7 @@ export class Head extends Component {
 
     start() {
         this.node.setPosition(this.randomPos());
+        this.node.parent.addChild(instantiate(this.foodPrefab));
     }
 
     update(deltaTime: number) {}
