@@ -75,6 +75,15 @@ export class Head extends Component {
     }
     //#endregion 生命周期
 
+    moveBody() {
+        const headPos = this.node.position; // 保存蛇头移动前的位置
+        for (let i = this.bodyArray.length - 2; i >= 0; i--) {
+            // 从后往前开始遍历移动蛇身
+            this.bodyArray[i + 1].position = this.bodyArray[i].position; // 每一个蛇身都移动到它前面一个节点的位置
+        }
+        this.bodyArray[1].position = headPos;
+    }
+
     rotateHead(headPos: math.Vec2) {
         const angle = (v2(1, 0).signAngle(headPos) * 180) / Math.PI;
         this.node.angle = angle - 90;
