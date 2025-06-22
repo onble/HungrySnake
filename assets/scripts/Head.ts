@@ -3,8 +3,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass("Head")
 export class Head extends Component {
-    @property(Array(Node))
-    public bodyArray: Node[] = [];
+    //#region 预制体引用
 
     @property(Prefab)
     public bodyPrefab: Prefab = null;
@@ -12,13 +11,34 @@ export class Head extends Component {
     @property(Prefab)
     public foodPrefab: Prefab = null;
 
+    //#endregion 预制体引用
+
+    //#region 变量
+
+    /** 蛇身体数组(包括蛇头) */
+    @property(Array(Node))
+    public bodyArray: Node[] = [];
+
+    /** 初始蛇身数量 */
     @property(CCInteger)
     bodyNum: number = 2;
 
+    /** 蛇身之间的距离 */
     @property(CCFloat)
     bodyDistance: number = 50;
 
+    /** 蛇移动速度 */
     speed: number = 200;
+
+    //#region 变量
+
+    //#region 生命周期
+    protected onLoad(): void {
+        this.bodyArray.push(this.node);
+        for (let i = 0; i <= this.bodyNum; i++) {
+            this.getNowBody();
+        }
+    }
 
     start() {
         this.node.setPosition(this.randomPos());
@@ -26,7 +46,17 @@ export class Head extends Component {
     }
 
     update(deltaTime: number) {}
+    //#endregion 生命周期
 
+    getNowBody() {
+        const newBody = instantiate(this.bodyPrefab);
+        if (this.bodyArray.length === 1) {
+            const direction = this.node.position.clone().normalize();
+            newBody.setPosition(this.node.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
+        }
+        this.node.parent.addChild(newBody);
+        this.bodyArray.push(newBody);
+    }
     /**
      * 随机蛇生成的位置
      */
