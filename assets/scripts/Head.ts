@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, Node, Prefab } from "cc";
+import { _decorator, CCFloat, CCInteger, Component, math, Node, Prefab, UITransform, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("Head")
@@ -20,7 +20,20 @@ export class Head extends Component {
 
     speed: number = 200;
 
-    start() {}
+    start() {
+        this.node.setPosition(this.randomPos());
+    }
 
     update(deltaTime: number) {}
+
+    /**
+     * 随机蛇生成的位置
+     */
+    randomPos(): math.Vec3 {
+        const width = this.node.parent.getComponent(UITransform).contentSize.width - 200;
+        const height = this.node.parent.getComponent(UITransform).contentSize.height - 200;
+        const x = Math.round(Math.random() * width) - width / 2;
+        const y = Math.round(Math.random() * height) - height / 2;
+        return v3(x, y, 0);
+    }
 }
