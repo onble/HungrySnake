@@ -35,13 +35,13 @@ export class Head extends Component {
     //#region 生命周期
     protected onLoad(): void {
         this.bodyArray.push(this.node);
-        for (let i = 0; i <= this.bodyNum; i++) {
+        this.node.setPosition(this.randomPos());
+        for (let i = 1; i <= this.bodyNum; i++) {
             this.getNowBody();
         }
     }
 
     start() {
-        this.node.setPosition(this.randomPos());
         this.node.parent.addChild(instantiate(this.foodPrefab));
     }
 
@@ -53,6 +53,11 @@ export class Head extends Component {
         if (this.bodyArray.length === 1) {
             const direction = this.node.position.clone().normalize();
             newBody.setPosition(this.node.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
+        } else {
+            const lastBody = this.bodyArray[this.bodyArray.length - 1];
+            const lastBoBody = this.bodyArray[this.bodyArray.length - 2];
+            const direction = lastBoBody.position.clone().subtract(lastBody.position).normalize();
+            newBody.setPosition(lastBody.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
         }
         this.node.parent.addChild(newBody);
         this.bodyArray.push(newBody);
