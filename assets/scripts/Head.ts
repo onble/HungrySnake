@@ -65,6 +65,9 @@ export class Head extends Component {
     }
 
     start() {
+        this.schedule(function () {
+            this.moveBody();
+        }, 0.2);
         this.node.parent.addChild(instantiate(this.foodPrefab));
     }
 
