@@ -1,4 +1,4 @@
-import { _decorator, CCFloat, CCInteger, Component, instantiate, math, Node, Prefab, UITransform, v3 } from "cc";
+import { _decorator, CCFloat, CCInteger, Component, instantiate, math, Node, Prefab, UITransform, v2, v3 } from "cc";
 const { ccclass, property } = _decorator;
 
 @ccclass("Head")
@@ -36,6 +36,8 @@ export class Head extends Component {
     protected onLoad(): void {
         this.bodyArray.push(this.node);
         this.node.setPosition(this.randomPos());
+
+        this.rotateHead(new math.Vec2(this.node.position.x, this.node.position.y));
         for (let i = 1; i <= this.bodyNum; i++) {
             this.getNowBody();
         }
@@ -48,6 +50,10 @@ export class Head extends Component {
     update(deltaTime: number) {}
     //#endregion 生命周期
 
+    rotateHead(headPos: math.Vec2) {
+        const angle = (v2(1, 0).signAngle(headPos) * 180) / Math.PI;
+        this.node.angle = angle - 90;
+    }
     getNowBody() {
         const newBody = instantiate(this.bodyPrefab);
         if (this.bodyArray.length === 1) {
