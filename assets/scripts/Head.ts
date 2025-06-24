@@ -1,8 +1,10 @@
 import {
     _decorator,
     AudioClip,
+    AudioSource,
     CCFloat,
     CCInteger,
+    CircleCollider2D,
     Collider2D,
     Component,
     Contact2DType,
@@ -139,7 +141,7 @@ export class Head extends Component {
     }
     getNewBody() {
         const newBody = instantiate(this.bodyPrefab);
-        if (this.bodyArray.length === 1) {
+        if (this.bodyArray.length < 3) {
             const direction = this.node.position.clone().normalize();
             newBody.setPosition(this.node.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
         } else {
@@ -147,6 +149,7 @@ export class Head extends Component {
             const lastBoBody = this.bodyArray[this.bodyArray.length - 2];
             const direction = lastBoBody.position.clone().subtract(lastBody.position).normalize();
             newBody.setPosition(lastBody.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
+            newBody.getComponent(CircleCollider2D).group = 16;
         }
         // 将实例化的新蛇身放入canvas画布
         this.node.parent.addChild(newBody);
@@ -193,10 +196,12 @@ export class Head extends Component {
             this.node.parent.addChild(newFood);
             // 更新身体
             this.getNewBody();
+            this.node.getComponent(AudioSource).playOneShot(this.eatSound);
         }
-        if (otherCollider.group === 8) {
+        if (otherCollider.group === 8 || otherCollider.group === 16) {
             this.gameOverPanel.active = true;
             this.gameOverPanel.getChildByName("Txt_Score").getComponent(Label).string = `得分: ${this.Score}`;
+            this.node.getComponent(AudioSource).playOneShot(this.dieSound);
             director.pause();
         }
     }
