@@ -38,14 +38,17 @@
       },
       {
         "__id__": 32
+      },
+      {
+        "__id__": 34
       }
     ],
     "_prefab": {
-      "__id__": 34
+      "__id__": 36
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": 1389.136,
       "y": 0,
       "z": 0
     },
@@ -720,6 +723,18 @@
     "bodyArray": [],
     "bodyNum": 2,
     "bodyDistance": 50,
+    "Score": 0,
+    "eatSound": {
+      "__uuid__": "87a2de56-0368-4592-bc3b-65da6b1a80c9",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "dieSound": {
+      "__uuid__": "2d3a5e69-87a3-4101-a718-b2c962b648d1",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "txt_score": null,
+    "startPanel": null,
+    "gameOverPanel": null,
     "joystick": null,
     "_id": ""
   },
@@ -758,6 +773,31 @@
     "fileId": "45EYamna5N0ZmbVDE9qCI5"
   },
   {
+    "__type__": "cc.AudioSource",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 35
+    },
+    "_clip": {
+      "__uuid__": "0d8894a4-1187-43a2-97ee-d09c736bb9d6",
+      "__expectedType__": "cc.AudioClip"
+    },
+    "_loop": true,
+    "_playOnAwake": true,
+    "_volume": 0.1,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "51tGo5wXtPdr8+zR/auyR2"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -766,7 +806,6 @@
       "__id__": 0
     },
     "fileId": "b64rz5cnVNt754bMSGYvSh",
-    "instance": null,
     "targetOverrides": null
   }
 ]

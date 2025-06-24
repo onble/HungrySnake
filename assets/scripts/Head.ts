@@ -1,5 +1,6 @@
 import {
     _decorator,
+    AudioClip,
     CCFloat,
     CCInteger,
     Collider2D,
@@ -56,6 +57,12 @@ export class Head extends Component {
     /** 分数 */
     @property(Number)
     Score: number = 0;
+
+    @property(AudioClip)
+    public eatSound: AudioClip = null;
+
+    @property(AudioClip)
+    public dieSound: AudioClip = null;
 
     /** 保存上一帧的移动方向 */
     previousMoveDir: Vec3;
@@ -180,7 +187,7 @@ export class Head extends Component {
         if (otherCollider.group === 4) {
             otherCollider.node.removeFromParent();
             this.Score++;
-            this.txt_score.string = `${this.Score}`;
+            this.txt_score.string = `<color=#000000>${this.Score}</color>`;
             // 产生食物
             const newFood = instantiate(this.foodPrefab);
             this.node.parent.addChild(newFood);
