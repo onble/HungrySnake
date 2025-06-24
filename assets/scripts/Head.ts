@@ -5,6 +5,7 @@ import {
     Collider2D,
     Component,
     Contact2DType,
+    director,
     instantiate,
     math,
     Node,
@@ -122,8 +123,11 @@ export class Head extends Component {
             const direction = lastBoBody.position.clone().subtract(lastBody.position).normalize();
             newBody.setPosition(lastBody.position.clone().subtract(direction.multiplyScalar(this.bodyDistance)));
         }
+        // 将实例化的新蛇身放入canvas画布
         this.node.parent.addChild(newBody);
+        // 将新蛇身放入数组
         this.bodyArray.push(newBody);
+        this.changeZIndex();
     }
     /**
      * 随机蛇生成的位置
@@ -134,6 +138,12 @@ export class Head extends Component {
         const x = Math.round(Math.random() * width) - width / 2;
         const y = Math.round(Math.random() * height) - height / 2;
         return v3(x, y, 0);
+    }
+    changeZIndex() {
+        const lastIndex = this.node.parent.children.length - 1;
+        for (let i = 0; i < this.bodyArray.length; i++) {
+            this.bodyArray[i].setSiblingIndex(lastIndex - i);
+        }
     }
     //#region 事件监听
     private beginContactHandle(selfCollider: Collider2D, otherCollider: Collider2D): void {
@@ -146,6 +156,9 @@ export class Head extends Component {
             this.node.parent.addChild(newFood);
             // 更新身体
             this.getNewBody();
+        }
+        if (otherCollider.group === 8) {
+            director.pause();
         }
     }
     //#endregion 事件监听
