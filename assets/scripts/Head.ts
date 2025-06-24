@@ -2,7 +2,9 @@ import {
     _decorator,
     CCFloat,
     CCInteger,
+    Collider2D,
     Component,
+    Contact2DType,
     instantiate,
     math,
     Node,
@@ -48,6 +50,10 @@ export class Head extends Component {
     @property(Vec3)
     snakeDir: Vec3; // 蛇头的方向
 
+    /** 分数 */
+    @property(Number)
+    Score: number = 0;
+
     /** 保存上一帧的移动方向 */
     previousMoveDir: Vec3;
 
@@ -65,7 +71,7 @@ export class Head extends Component {
 
         this.previousMoveDir = this.node.position.clone().normalize();
         for (let i = 1; i <= this.bodyNum; i++) {
-            this.getNowBody();
+            this.getNewBody();
         }
     }
 
@@ -74,6 +80,8 @@ export class Head extends Component {
             this.moveBody();
         }, 0.2);
         this.node.parent.addChild(instantiate(this.foodPrefab));
+        const collider = this.node.getComponent(Collider2D);
+        collider.on(Contact2DType.BEGIN_CONTACT, this.beginContactHandle, this);
     }
 
     update(deltaTime: number) {
@@ -103,7 +111,7 @@ export class Head extends Component {
         const angle = (v2(1, 0).signAngle(headPos) * 180) / Math.PI;
         this.node.angle = angle - 90;
     }
-    getNowBody() {
+    getNewBody() {
         const newBody = instantiate(this.bodyPrefab);
         if (this.bodyArray.length === 1) {
             const direction = this.node.position.clone().normalize();
@@ -127,4 +135,18 @@ export class Head extends Component {
         const y = Math.round(Math.random() * height) - height / 2;
         return v3(x, y, 0);
     }
+    //#region 事件监听
+    private beginContactHandle(selfCollider: Collider2D, otherCollider: Collider2D): void {
+        // 只在两个碰撞体开始接触时被调用一次
+        if (otherCollider.group === 4) {
+            otherCollider.node.removeFromParent();
+            this.Score++;
+            // 产生食物
+            const newFood = instantiate(this.foodPrefab);
+            this.node.parent.addChild(newFood);
+            // 更新身体
+            this.getNewBody();
+        }
+    }
+    //#endregion 事件监听
 }
