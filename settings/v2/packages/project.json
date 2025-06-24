@@ -5,5 +5,27 @@
       "width": 1920,
       "height": 1080
     }
+  },
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "Head"
+      },
+      {
+        "index": 2,
+        "name": "Food"
+      },
+      {
+        "index": 3,
+        "name": "Wall"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 12,
+      "2": 2,
+      "3": 2
+    }
   }
 }

@@ -35,10 +35,13 @@
       },
       {
         "__id__": 30
+      },
+      {
+        "__id__": 32
       }
     ],
     "_prefab": {
-      "__id__": 32
+      "__id__": 34
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -706,11 +709,53 @@
     "__prefab": {
       "__id__": 31
     },
+    "bodyPrefab": {
+      "__uuid__": "a96dc9eb-9c48-47e5-88d1-021b5217e8dd",
+      "__expectedType__": "cc.Prefab"
+    },
+    "foodPrefab": {
+      "__uuid__": "71a50d55-b3e8-434f-9584-bc97e8b1437e",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bodyArray": [],
+    "bodyNum": 2,
+    "bodyDistance": 50,
+    "joystick": null,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "f1o/gx62FKyqhbR1AWHnXY"
+  },
+  {
+    "__type__": "cc.CircleCollider2D",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 33
+    },
+    "tag": 0,
+    "_group": 2,
+    "_density": 1,
+    "_sensor": false,
+    "_friction": 0.2,
+    "_restitution": 0,
+    "_offset": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_radius": 25,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "45EYamna5N0ZmbVDE9qCI5"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -721,6 +766,7 @@
       "__id__": 0
     },
     "fileId": "b64rz5cnVNt754bMSGYvSh",
+    "instance": null,
     "targetOverrides": null
   }
 ]
