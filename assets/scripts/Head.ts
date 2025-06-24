@@ -80,18 +80,21 @@ export class Head extends Component {
 
     //#region 生命周期
     protected onLoad(): void {
-        this.bodyArray.push(this.node);
-        this.node.setPosition(this.randomPos());
+        this.previousMoveDir = this.node.position.clone().normalize();
 
+        this.bodyArray.push(this.node);
         this.rotateHead(new math.Vec2(this.node.position.x, this.node.position.y));
 
-        this.previousMoveDir = this.node.position.clone().normalize();
         for (let i = 1; i <= this.bodyNum; i++) {
             this.getNewBody();
         }
+        this.node.setPosition(this.randomPos());
     }
 
     start() {
+        if (!director.isPaused()) {
+            director.pause();
+        }
         this.schedule(function () {
             this.moveBody();
         }, 0.2);
