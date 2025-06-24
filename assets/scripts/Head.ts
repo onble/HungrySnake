@@ -7,9 +7,11 @@ import {
     Contact2DType,
     director,
     instantiate,
+    Label,
     math,
     Node,
     Prefab,
+    RichText,
     UITransform,
     v2,
     v3,
@@ -60,8 +62,21 @@ export class Head extends Component {
 
     //#endregion 变量
 
+    //#region UI
+
+    @property(RichText)
+    public txt_score: RichText = null;
+
+    @property(Node)
+    public startPanel: Node = null;
+
+    @property(Node)
+    public gameOverPanel: Node = null;
+
     @property(Node)
     public joystick: Node = null;
+
+    //#endregion UI
 
     //#region 生命周期
     protected onLoad(): void {
@@ -146,11 +161,23 @@ export class Head extends Component {
         }
     }
     //#region 事件监听
+
+    startGame() {
+        if (director.isPaused()) {
+            director.resume();
+        }
+        this.startPanel.active = false;
+    }
+    restartGame() {
+        director.resume();
+        director.loadScene("scene1");
+    }
     private beginContactHandle(selfCollider: Collider2D, otherCollider: Collider2D): void {
         // 只在两个碰撞体开始接触时被调用一次
         if (otherCollider.group === 4) {
             otherCollider.node.removeFromParent();
             this.Score++;
+            this.txt_score.string = `${this.Score}`;
             // 产生食物
             const newFood = instantiate(this.foodPrefab);
             this.node.parent.addChild(newFood);
@@ -158,6 +185,8 @@ export class Head extends Component {
             this.getNewBody();
         }
         if (otherCollider.group === 8) {
+            this.gameOverPanel.active = true;
+            this.gameOverPanel.getChildByName("Txt_Score").getComponent(Label).string = `得分: ${this.Score}`;
             director.pause();
         }
     }
